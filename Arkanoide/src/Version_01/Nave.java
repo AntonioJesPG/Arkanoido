@@ -17,6 +17,8 @@ public class Nave extends Actor{
 	}
 	
 	public void act() {
+		super.act();
+		
 		this.x += this.vx;
 		this.y += this.vy;
 		
