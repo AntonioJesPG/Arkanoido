@@ -15,8 +15,10 @@ public class Bola extends Actor{
 		this.y = Stage.HEIGHT/2;
 		this.vx =  3;
 		this.vy =  3;
-		this.tamanioBola = 30;
+		this.tamanioBola = 20;
 	}
+	
+	//Pintado de la bola
 	@Override
 	public void paint(Graphics2D g) {
 		g.setColor(Color.WHITE);
@@ -24,6 +26,7 @@ public class Bola extends Actor{
 		g.fillOval(this.x,this.y, tamanioBola,tamanioBola);
 	}
 	
+	//Movimiento de la bola
 	public void act() {
 		
 		this.x += this.vx;
@@ -31,7 +34,7 @@ public class Bola extends Actor{
 		
 		if ( x < 0 || x > Stage.WIDTH-tamanioBola) { 
 			this.vx = -this.vx; 
-			this.y += vx;
+			//this.y += vx;
 			}
 		if( y < 0 || y > Stage.HEIGHT-tamanioBola*2) {
 			this.vy = -this.vy;

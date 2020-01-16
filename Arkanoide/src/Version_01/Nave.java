@@ -1,13 +1,14 @@
 package Version_01;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 public class Nave extends Actor{
 
 	protected static final int PLAYER_SPEED = 4;
 	protected int vx;
-	protected int vy;
-	private boolean up,down,left,right;
+	private boolean left,right;
 	
 	public Nave(Stage stage) {
 		super(stage);
@@ -16,46 +17,48 @@ public class Nave extends Actor{
 		this.y = 600;
 	}
 	
+	//Movimiento de la nave
 	public void act() {
 		super.act();
 		
 		this.x += this.vx;
-		this.y += this.vy;
 		
 		if(this.x < 0)
 			this.x = 0;
 		if(this.x > Stage.WIDTH - getWidth())
 			x = Stage.WIDTH - getWidth();
-		
-		if(this.y < 0)
-			this.y = 0;
-		if(this.y > Stage.HEIGHT - getHeight())
-			this.y = Stage.HEIGHT - getHeight();
-		
 	}
 
 	public int getVx() { return this.vx; }
 	public void setVx( int i) { this.vx = i; }
+
 	
-	public int getVy() { return this.vy; }
-	public void setVy( int i) { this.vy = i; }
-	
+	//Método para cambiar la velocidad del jugador
 	protected void updateSpeed() {
 		
-		this.vx=0; this.vy=0;
-		if(this.down) this.vy = PLAYER_SPEED;
-		if(this.up) this.vy = -PLAYER_SPEED;
+		this.vx=0;
 		if(this.left) this.vx = -PLAYER_SPEED;
 		if(this.right) this.vx = PLAYER_SPEED;
 		
 	}
 	
+	//Movimiento del ratón
+	public void mouseMoved(MouseEvent e) {
+		if(e.getX() > 0 && e.getX() < Stage.WIDTH - getWidth()) {
+		this.x = e.getX();
+		}
+	}
+	
+
+	public void mouseDragged(MouseEvent e) {
+
+	}
+	
+	//Liberar una tecla
 	public void keyReleased(KeyEvent e) {
 		
 		switch (e.getKeyCode()) {
 		
-			case KeyEvent.VK_DOWN : this.down = false;break;
-			case KeyEvent.VK_UP : this.up = false;break;
 			case KeyEvent.VK_LEFT : this.left = false;break;
 			case KeyEvent.VK_RIGHT : this.right = false;break;
 		
@@ -65,12 +68,11 @@ public class Nave extends Actor{
 		
 	}
 	
+	//Pulsar una tecla
 	public void keyPressed(KeyEvent e) {
 		
 		switch (e.getKeyCode()) {
 		
-			case KeyEvent.VK_DOWN : this.down = true;break;
-			case KeyEvent.VK_UP : this.up = true;break;
 			case KeyEvent.VK_LEFT : this.left = true;break;
 			case KeyEvent.VK_RIGHT : this.right = true;break;
 			

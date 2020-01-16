@@ -10,6 +10,7 @@ public class SpriteCache extends ResourceCache{
 	
 	private HashMap sprites;
 	
+	//Carga de imágenes
 	protected Object loadResource(URL url) {
 		
 		try {

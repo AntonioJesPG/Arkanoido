@@ -7,11 +7,16 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
@@ -19,7 +24,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ventana extends Canvas implements Stage{
+public class Ventana extends Canvas implements Stage, KeyListener, MouseMotionListener{
 	
 	//Creamos la ventana
 	JFrame ventana = new JFrame("Arkanoide");
@@ -39,6 +44,8 @@ public class Ventana extends Canvas implements Stage{
 	private BufferStrategy strategy;
 	private long usedTime;
 	private SpriteCache spriteCache;
+	
+	//Variable del jugador
 	private Nave nave;
 	
 	//Fondo del juego
@@ -59,11 +66,12 @@ public class Ventana extends Canvas implements Stage{
 		
 	this.spriteCache = new SpriteCache();
 	
-	//Creamos el JPanel qu vamos a usar	
+	//Creamos el JPanel que vamos a usar con un borderLayout	
 	JPanel panel = (JPanel)ventana.getContentPane();
 	panel.setLayout(new BorderLayout());
 	panel.add(this, BorderLayout.CENTER);
 	
+	//Límites de la ventana
 	ventana.setBounds(0,0,JFRAME_WIDTH,JFRAME_HEIGHT);
 	
 	//Mostramos la ventana
@@ -76,6 +84,7 @@ public class Ventana extends Canvas implements Stage{
 		}
 	});
 	
+	//Creación de la estrategía del Graphics2D
 	this.createBufferStrategy(2);
 	strategy = this.getBufferStrategy();
 	
@@ -85,28 +94,32 @@ public class Ventana extends Canvas implements Stage{
 	ventana.setResizable(false);
 	//Cambiamos el foco al canvas
 	this.requestFocus();
+	
+	//Se añaden a la ventana los listener del ratón y el teclado para el movimiento
+	this.addMouseMotionListener(this);
+	this.addKeyListener(this);
 	}
 	
 	//Inicializamos las variables del juego
 	public void initWorld() {
 		//Creamos la nprivate BufferedImage space;
 		nave = new Nave(this);
-		//actores.add(nave);
-		
+		actores.add(nave);
 		
 		//Creamos los ladrillos
-		Ladrillo l;
+		Ladrillo l = new Ladrillo(this, colores.get(0));
 		int x = 0;
 		int y = 0;
 		for(int j = 0; j < 6; j++) {
 			for(int i = 0 ; i < 12; i++) {
 				l = new Ladrillo(this, colores.get(j));
 				l.setX(((x)));
-				x = x + 50;
+				//Cada ladrillo va a estar al lado del siguiente hasta llegar a los 12
+				x = x + l.getAnchoLadrillo();
 				l.setY(((y)));
 				actores.add(l);	
 			}
-			y = y + 30;
+			y = y + l.getAltoLadrillo();
 			x = 0;
 		}
 		//Añadimos la bola
@@ -118,7 +131,6 @@ public class Ventana extends Canvas implements Stage{
 		for(Actor a : actores) {
 			a.act();
 		}
-		nave.act();
 	}
 	
 	//Método para cerrar la ventana 
@@ -134,6 +146,7 @@ public class Ventana extends Canvas implements Stage{
 		}
 	}
 	
+	//Singleton
 	public static Ventana getInstancia () {
 		if (instancia == null) {
 			instancia = new Ventana();
@@ -146,14 +159,17 @@ public class Ventana extends Canvas implements Stage{
 		getToolkit().getDefaultToolkit().sync();
 		Graphics2D g = (Graphics2D)strategy.getDrawGraphics();
 		this.strategy.show();
+		
 		//Fondo de pantalla
 		space = spriteCache.getSprite("space2.gif");
 		g.setPaint(new TexturePaint(space, new Rectangle(0,0,space.getWidth(),space.getHeight())));
 		g.fillRect(0,0,JFRAME_WIDTH, JFRAME_HEIGHT);
+		
+		//Llamamos al método paint de cada actor
 		for(Actor a : actores) {
 			a.paint(g);
 		}
-		nave.paint(g);
+		//Mostramos la estrategia
 		this.strategy.show();
 		
 	}
@@ -182,11 +198,25 @@ public class Ventana extends Canvas implements Stage{
 		}
 	}
 	
+	//Llamamos al método de despulsar una tecla
 	public void keyReleased(KeyEvent e) {
 		nave.keyReleased(e);
 	}
+	//Llamamos al método de pulsar una tecla
 	public void keyPressed(KeyEvent e) {
 		nave.keyPressed(e);	
+	}
+	//Llamamos al método de mover el ratón
+	public void mouseMoved(MouseEvent e) {
+		nave.mouseMoved(e);
+	}
+	
+	public void mouseDragged(MouseEvent e) {
+		
+	}
+	
+	public void keyTyped(KeyEvent e) {
+		
 	}
 	
 	//M�todo main

@@ -14,6 +14,7 @@ public class Actor {
 	
 	protected int frameSpeed;
 	protected int t;
+	protected boolean markedForRemoval = false;
 	
 	private BufferStrategy strategy;
 	protected Stage stage;
@@ -71,5 +72,4 @@ public class Actor {
 		this.width = Math.max(width, image.getWidth());
 		}
 	}
-	
 }

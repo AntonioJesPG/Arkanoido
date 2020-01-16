@@ -13,6 +13,7 @@ public abstract class ResourceCache {
 		
 	}
 	
+	//Carga de recursos
 	protected Object loadResource(String name) {
 		
 		URL url = null;
