@@ -46,7 +46,7 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener 
 	private SpriteCache spriteCache;
 
 	// Variable del jugador
-	private Nave nave;
+	private Nave nave  = null;
 
 	// Fondo del juego
 	private BufferedImage space;
@@ -97,7 +97,6 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener 
 		this.requestFocus();
 
 		// Se añaden a la ventana los listener del ratón y el teclado para el movimiento
-		this.addMouseMotionListener(this);
 		this.addKeyListener(this);
 	}
 
@@ -106,7 +105,7 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener 
 		// Creamos la nprivate BufferedImage space;
 		nave = new Nave();
 		actores.add(nave);
-
+		this.addMouseMotionListener(this);
 		// Creamos los ladrillos
 		Ladrillo l = new Ladrillo(colores.get(0));
 		int x = 0;
