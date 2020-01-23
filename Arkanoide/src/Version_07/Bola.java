@@ -2,12 +2,16 @@ package Version_07;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Date;
 
 
 public class Bola extends Actor{
-
+	Date startDate = new Date();
+	Date endDate;
 	int vx, vy;
 	boolean inicioJuego=true;
+	private static final int TIEMPO_INICIO = 5;
+	int segundos;
 	
 	public Bola() {
 		super();
@@ -29,6 +33,10 @@ public class Bola extends Actor{
 	
 	//Movimiento de la bola (necesita mejoras para que sea más natural)
 	public void act() {
+		endDate = new Date();
+		segundos = (int) ((endDate.getTime()-startDate.getTime())/1000);
+		System.out.println(segundos);
+		if(segundos >= TIEMPO_INICIO) iniciarJuego();
 		
 		if(inicioJuego) {
 			this.x = Ventana.getInstancia().getNave().getX();
