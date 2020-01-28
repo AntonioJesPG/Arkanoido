@@ -17,7 +17,7 @@ public class Bola extends Actor{
 	
 	//Distancia de la bola y aumento de velocidad
 	int distancia = 5;
-	int factorVelocidad = 10000;
+	int factorVelocidad = 1000;
 	
 	//El punto de la bola y su trayectoria
 	PuntoAltaPrecision p;

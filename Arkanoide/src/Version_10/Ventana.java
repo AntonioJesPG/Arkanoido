@@ -54,7 +54,7 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 
 	//Variable final Nivel
 	private boolean nivelAcabado = false;
-	
+	private boolean gameOver = false;
 	// Fondo del juego
 	private BufferedImage space;
 
@@ -228,7 +228,7 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 		initWorld();
 		
 		//Mientras la nave siga viva se juega
-		while (this.isVisible() && getNave().getVidaActual() > 0) {
+		while (this.isVisible() && getNave().getVidaActual() > 0 && gameOver != true) {
 			long millisAntesDeConstruirEscena = System.currentTimeMillis();
 			// Actualizamos, comprobamos colisiones y pintamos el nuevo frame
 			updateWorld();
@@ -237,6 +237,10 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 			//Se comprueba si la nave debe perder vida
 			if(getBola().getY() > (Ventana.getInstancia().getHeight() - getBola().getHeight())) {
 				getNave().quitarVida();
+			}
+			
+			if(getNave().getVidaActual() == 0) {
+				gameOver();
 			}
 			// Calculamos la cantidad de milisegundos que se ha tardado en realizar un nuevo
 			// frame del juego
@@ -251,6 +255,22 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 			}
 		}
 	}
+	
+	public void gameOver() {
+		actores.clear();
+		gameOver = true;
+		getToolkit().getDefaultToolkit().sync();
+		Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+		this.strategy.show();
+
+		// Fondo de pantalla
+		space = spriteCache.getSprite("GameOver.png");
+		g.setPaint(new TexturePaint(space, new Rectangle(0, 0, space.getWidth(), space.getHeight())));
+		g.fillRect(0, 0, JFRAME_WIDTH, JFRAME_HEIGHT);
+
+		// Mostramos la estrategia
+		this.strategy.show();
+	}
 
 	// Llamamos al método de despulsar una tecla
 	public void keyReleased(KeyEvent e) {
@@ -259,7 +279,17 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 
 	// Llamamos al método de pulsar una tecla
 	public void keyPressed(KeyEvent e) {
+		//Se añade R para reiniciar el juego pero da error con la pantalla de Game Over
+		/*
+		if(e.getKeyCode() == KeyEvent.VK_R) {
+			this.gameOver = false;
+			this.nivelActual = 0;
+			game();
+		}
+		*/
+		//else {
 		nave.keyPressed(e);
+		//}
 	}
 
 	public void keyTyped(KeyEvent e) {
