@@ -66,12 +66,12 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 		AlmacenSonidos.getInstance().loopSound(AlmacenSonidos.getInstance().MUSICA_DE_FONDO);
 		
 		// Añadimos los colores que vamos a usar a su array
-		colores.add(Color.RED);
-		colores.add(Color.BLUE);
-		colores.add(Color.ORANGE);
-		colores.add(Color.CYAN);
+		colores.add(Color.MAGENTA);
 		colores.add(Color.PINK);
-		colores.add(Color.GREEN);
+		colores.add(Color.MAGENTA);
+		colores.add(Color.MAGENTA);
+		colores.add(Color.PINK);
+		colores.add(Color.MAGENTA);
 
 		this.spriteCache = new SpriteCache();
 
@@ -205,7 +205,12 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 		this.strategy.show();
 
 		// Fondo de pantalla
+		if(nivelActual == 1) {
+			space = spriteCache.getSprite("fondo2.png");
+		}
+		else {
 		space = spriteCache.getSprite("space2.gif");
+		}
 		g.setPaint(new TexturePaint(space, new Rectangle(0, 0, space.getWidth(), space.getHeight())));
 		g.fillRect(0, 0, JFRAME_WIDTH, JFRAME_HEIGHT);
 		

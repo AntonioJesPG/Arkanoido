@@ -11,7 +11,7 @@ public class Nivel2 extends Nivel{
 		for (int j = 0; j < 7; j++) {
 			for (int i = 0; i < 12; i++) {
 				if((i < 3 || i > 8) && (j < 2 || j < 6)) {
-				l = new Ladrillo(Color.GRAY,2);
+				l = new Ladrillo(Color.DARK_GRAY,2);
 				l.setX(x);
 				// Cada ladrillo va a estar al lado del siguiente hasta llegar a los 12
 				l.setY(y);
@@ -19,14 +19,14 @@ public class Nivel2 extends Nivel{
 				}
 				
 				if( i > 3 && i < 8 && j > 0 && j < 5 ) {
-					l = new Ladrillo(Color.magenta,-1);
+					l = new Ladrillo(Color.RED,-1);
 					l.setX(x);
 					l.setY(y);
 					this.nivel.add(l);
 				}
 				
 				if( j == 6) {
-					l = new Ladrillo(Color.GRAY,2);
+					l = new Ladrillo(Color.DARK_GRAY,2);
 					l.setX(x);
 					l.setY(y);
 					this.nivel.add(l);

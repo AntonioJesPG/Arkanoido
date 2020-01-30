@@ -16,7 +16,7 @@ public class Nivel1 extends Nivel{
 				// Cada ladrillo va a estar al lado del siguiente hasta llegar a los 12
 				x = x + l.getWidth();
 				l.setY(y);
-				this.nivel.add(l);
+				//this.nivel.add(l);
 			}
 			y = y + l.getHeight();
 			x = 0;

@@ -42,6 +42,9 @@ public class Ladrillo extends Actor{
 	public void collision(Actor a) {
 		if(a instanceof Bola) {
 			resistencia--;
+			if(resistencia >= 1) {
+			c = Color.LIGHT_GRAY;
+			}
 			if(resistencia == 0) {
 			setMarkedForRemoval(true);
 			Explosion ex = new Explosion();
