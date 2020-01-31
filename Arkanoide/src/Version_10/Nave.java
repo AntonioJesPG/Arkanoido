@@ -42,6 +42,7 @@ public class Nave extends Actor{
 
 	public void quitarVida() {
 		this.vidasActual -= 1;
+		Ventana.getInstancia().reiniciarJuego();
 	}
 	
 	public int getVidaActual() {

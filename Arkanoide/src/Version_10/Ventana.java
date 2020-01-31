@@ -209,7 +209,7 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 			space = spriteCache.getSprite("fondo2.png");
 		}
 		else {
-		space = spriteCache.getSprite("space2.gif");
+		space = spriteCache.getSprite("fondo1.png");
 		}
 		g.setPaint(new TexturePaint(space, new Rectangle(0, 0, space.getWidth(), space.getHeight())));
 		g.fillRect(0, 0, JFRAME_WIDTH, JFRAME_HEIGHT);
@@ -244,9 +244,10 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 				getNave().quitarVida();
 			}
 			
-			if(getNave().getVidaActual() == 0) {
-				gameOver();
-			}
+			//if(getNave().getVidaActual() == 0) {
+				//gameOver();
+			//}
+			
 			// Calculamos la cantidad de milisegundos que se ha tardado en realizar un nuevo
 			// frame del juego
 			int millisUsados = (int) (System.currentTimeMillis() - millisAntesDeConstruirEscena);
@@ -259,6 +260,7 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 			} catch (InterruptedException e) {
 			}
 		}
+		gameOver();
 	}
 	
 	public void gameOver() {
@@ -365,6 +367,19 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	//Reinicia la posicion de la bola y de la nave cuando choca la bola contra el suelo
+	public void reiniciarJuego() {
+		getNave().setX(JFRAME_WIDTH/2);
+		for(Actor b : actores) {
+			if(b instanceof Bola) {
+				actores.remove(b);
+				b = new Bola();
+				actores.add(b);
+
 			}
 		}
 	}
