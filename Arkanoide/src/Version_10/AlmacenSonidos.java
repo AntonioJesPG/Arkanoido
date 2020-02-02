@@ -18,8 +18,8 @@ public class AlmacenSonidos {
 	private static String RESOURCES_FOLDER = "../res/";
 	
 	//Recursos de sonido
-	public static String MUSICA_DE_FONDO = "Arkanoid-SFX-01.wav";
-	public static String EFECTO_BOLA_NAVE = "Arkanoid-start-of-stage.wav";
+	public static String MUSICA_DE_FONDO = "Arkanoid-start-of-stage.wav";
+	public static String EFECTO_BOLA_NAVE = "Arkanoid-SFX-01.wav";
 	public static String EFECTO_BOLA_LADRILLO = "explosion.wav";
 	public static String BOLA_INICIO = "Arkanoid-SFX-02.wav";
 	

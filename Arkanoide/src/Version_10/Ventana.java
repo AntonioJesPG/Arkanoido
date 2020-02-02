@@ -21,6 +21,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Ventana extends Canvas implements KeyListener, MouseMotionListener, MouseListener {
@@ -63,7 +64,6 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 
 	public Ventana() {
 
-		AlmacenSonidos.getInstance().loopSound(AlmacenSonidos.getInstance().MUSICA_DE_FONDO);
 		
 		// Añadimos los colores que vamos a usar a su array
 		colores.add(Color.MAGENTA);
@@ -112,6 +112,7 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 
 	// Inicializamos las variables del juego
 	public void initWorld() {
+		AlmacenSonidos.getInstance().playSound(AlmacenSonidos.getInstance().MUSICA_DE_FONDO);
 		actores.clear();
 		nave = new Nave();
 		// Creamos la nprivate BufferedImage space;
@@ -217,6 +218,12 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 		// Llamamos al método paint de cada actor
 		for (Actor a : actores) {
 			a.paint(g);
+		}
+		
+		for(int i = 0 ; i < getNave().getVidaActual(); i++) {
+			g.setColor(Color.RED);
+			g.drawOval(30*i, 650, 15, 15);
+			g.fillOval(30*i, 650, 15, 15);
 		}
 		// Mostramos la estrategia
 		this.strategy.show();
@@ -398,6 +405,29 @@ public class Ventana extends Canvas implements KeyListener, MouseMotionListener,
 			nivelActual ++;
 			}
 		}
+		
+		if(nivelAcabado == true) {
+
+			// Fondo de pantalla
+			
+			Date startDate = new Date();
+			Date endDate;
+			int segundos = 0;
+				while(segundos < 5) {
+					
+					//Pintamos una imagen durante 5 segundos hasta que aparece el nuevo nivel
+					getToolkit().getDefaultToolkit().sync();
+					Graphics2D g = (Graphics2D) strategy.getDrawGraphics();
+					this.strategy.show();
+					space = spriteCache.getSprite("panelNiveles.png");
+					g.setPaint(new TexturePaint(space, new Rectangle(0, 0, space.getWidth(), space.getHeight())));
+					g.fillRect(0, 0, JFRAME_WIDTH, JFRAME_HEIGHT);
+					
+					endDate = new Date();
+					segundos = (int) ((endDate.getTime()-startDate.getTime())/1000);
+				}
+		}
+		
 	}
 	
 	public List<Actor> getActores(){
